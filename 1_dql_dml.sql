@@ -83,3 +83,90 @@
 -- TRUNCATE : Deleting All Data but Keeping Structure
 -- The TRUNCATE statement removes all rows from a table without logging individual row deletions.
 -- TRUNCATE TABLE users;
+
+-- Practice questions
+-- DML - INSERT,UPDATE,DELETE
+-- 1️⃣ Insert a new product named 'Laptop' with a price of 80,000 into the products table.
+-- INSERT INTO products(prod_name,price) VALUE ('Laptop',80000);
+
+-- 2️⃣ Insert multiple customers ('Alice', 'Bob', 'Charlie') into the customers table with unique IDs.
+-- INSERT INTO customers(cust_id,cust_name) VALUES (1,'Alice'),
+-- (2,'Bob'),
+-- (3,'Charlie');
+
+-- 3️⃣ Update the salary of employees earning less than 40,000 by increasing it by 15%.
+-- UPDATE employees
+-- SET salary = salary + (salary * 0.15)
+-- WHERE salary < 40000;
+
+-- 4️⃣ Update the price of all products in the products table by reducing them by 10%.
+-- UPDATE products
+-- SET price = price - (price * 0.15);
+
+-- 5️⃣ Delete all employees who have not been assigned a department (NULL values).
+-- DELETE FROM employees WHERE department IS NULL;
+
+-- 6️⃣ Delete all products from the products table that are out of stock.
+-- DELETE FROM products WHERE stock IS NULL OR stock = 0;
+
+-- 7️⃣ Insert a new record into the orders table with order ID 101, customer ID 1, and total amount 500.
+-- INSERT INTO orders(order_ID,customer_ID,total_amt)
+-- VALUES (101,1,500);
+
+-- 8️⃣ Update the status column of the orders table to 'Shipped' for all orders placed in the last 7 days.
+-- UPDATE orders
+-- SET status = 'Shipped'
+-- WHERE order_date BETWEEN DATE_SUB(CURDATE(),INTERVAL 7 DAY) AND CURDATE();
+
+-- 9️⃣ Delete all orders that were placed more than one year ago.
+-- DELETE FROM orders
+-- WHERE YEAR(DATEDIFF(deli_date,CURDATE())) > 1;  
+
+-- 🔟 Insert a new student into the students table with default values for age and grade.
+-- INSERT INTO students(stud_name)
+-- VALUES ('Alice'),
+-- ('Bob');
+
+-- CREATE TABLE Employees(
+--     EmployeeID INT PRIMARY KEY,
+--     Name VARCHAR(50) NOT NULL,
+--     Age INT CONSTRAINT chk CHECK (Age >= 18),
+--     Department VARCHAR(50),
+--     Salary DECIMAL(10,2) DEFAULT 30000,
+--     JoiningDate DATE,
+--     Email VARCHAR(100) UNIQUE
+-- );
+
+-- INSERT INTO Employees(EmployeeID,Name,Age,Department,Salary,JoiningDate,Email) VALUES (101,'Alice',25,'HR',50000,'2022-06-15','alice@email.com'),
+-- (102,'Bob',30,'IT',60000,'2021-09-01','bob@email.com'),
+-- (103,'Charlie',28,'Finance',DEFAULT,'2023-01-10','charlie@email.com'),
+-- (104,'Diana',22,NULL,35000,'2024-02-20','diana@email.com');
+
+-- DQL (Data Query Language) - SELECT Queries
+-- 1️⃣ Retrieve all employees who have a salary greater than 50,000.
+SELECT * FROM Employees WHERE Salary > 50000;
+
+-- 2️⃣ Display only the Name, Department, and Salary of employees who joined after 2022-01-01.
+SELECT Name, Department, Salary FROM Employees 
+WHERE JoiningDate > '2022-01-01';
+
+-- 3️⃣ Find employees whose Department is NULL.
+SELECT * FROM Employess 
+WHERE Department IS NULL;
+
+-- DML (Data Manipulation Language) - INSERT, UPDATE, DELETE
+-- 4️⃣ Update Charlie's salary to 55,000.
+UPDATE Employees SET Salary = 55000 WHERE Name = 'Charlie';
+
+-- 5️⃣ Delete the employee with EmployeeID = 104.
+DELETE FROM Employees WHERE EmployeeID = 104;
+
+-- DDL (Data Definition Language) - ALTER, DROP
+-- 6️⃣ Add a new column PhoneNumber with a data type of VARCHAR(15).
+
+-- 7️⃣ Remove the Email column from the table.
+
+-- Constraints
+-- 8️⃣ Try inserting a new employee with Age = 16. What happens?
+
+-- 9️⃣ Insert another employee with the same email as Alice. What happens?
