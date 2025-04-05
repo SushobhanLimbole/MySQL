@@ -144,29 +144,54 @@
 
 -- DQL (Data Query Language) - SELECT Queries
 -- 1️⃣ Retrieve all employees who have a salary greater than 50,000.
-SELECT * FROM Employees WHERE Salary > 50000;
+-- SELECT * FROM Employees WHERE Salary > 50000;
 
 -- 2️⃣ Display only the Name, Department, and Salary of employees who joined after 2022-01-01.
-SELECT Name, Department, Salary FROM Employees 
-WHERE JoiningDate > '2022-01-01';
+-- SELECT Name, Department, Salary FROM Employees 
+-- WHERE JoiningDate > '2022-01-01';
 
 -- 3️⃣ Find employees whose Department is NULL.
-SELECT * FROM Employess 
-WHERE Department IS NULL;
+-- SELECT * FROM Employess 
+-- WHERE Department IS NULL;
 
 -- DML (Data Manipulation Language) - INSERT, UPDATE, DELETE
 -- 4️⃣ Update Charlie's salary to 55,000.
-UPDATE Employees SET Salary = 55000 WHERE Name = 'Charlie';
+-- UPDATE Employees SET Salary = 55000 WHERE Name = 'Charlie';
 
 -- 5️⃣ Delete the employee with EmployeeID = 104.
-DELETE FROM Employees WHERE EmployeeID = 104;
+-- DELETE FROM Employees WHERE EmployeeID = 104;
 
 -- DDL (Data Definition Language) - ALTER, DROP
 -- 6️⃣ Add a new column PhoneNumber with a data type of VARCHAR(15).
+-- ALTER TABLE Employees 
+-- ADD COLUMN PhoneNumber VARCHAR(15);  
 
 -- 7️⃣ Remove the Email column from the table.
+-- ALTER TABLE Employees
+-- DROP COLUMN Email;
 
 -- Constraints
 -- 8️⃣ Try inserting a new employee with Age = 16. What happens?
+-- INSERT INTO Employees(
+--     EmployeeID,
+--     Name,
+--     Department,
+--     Salary,
+--     JoiningDate,
+--     Email
+-- ) VALUES (105,'Andy',16);
+-- There will be an error because there is a check constraint
+-- on column Age where it checks if the employee is 18+ or not
+-- if yes then the data is entered else error occurs 
 
 -- 9️⃣ Insert another employee with the same email as Alice. What happens?
+-- INSERT INTO Employees(
+--     EmployeeID,
+--     Name,
+--     Department,
+--     Salary,
+--     JoiningDate,
+--     Email
+-- ) VALUES (106,'Annie',20,'IT',DEFAULT,'2024-02-20','alice@gmail.com');
+-- There will be an error as the email has UNIQUE constraint
+-- So duplicate values arre not allowed
