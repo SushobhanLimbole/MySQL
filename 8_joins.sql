@@ -100,6 +100,74 @@
 -- DROP TABLE products;
 -- DROP TABLE categories;
 
+-- A foreign key is a column (or combination of columns) 
+-- that creates a relationship between two tables. It refers to the primary key of another table.
+
+-- 📌 Think of it like:
+-- If Orders.customer_id is a foreign key referencing Customers.customer_id, that means:
+
+-- “Every customer_id in the Orders table must exist in the Customers table.”
+-- 🧱 How It Maintains Data Integrity
+-- When you define a foreign key, the database enforces rules:
+-- You can only insert values that exist in the parent table.
+-- You cannot delete or update a referenced parent record unless 
+-- specific actions are defined (CASCADE, RESTRICT, etc.).
+-- 🔥 Real-World Example
+-- Customers table (Parent)
+-- customer_id	name
+-- 1	Alice
+-- 2	Bob
+-- Orders table (Child)
+-- order_id	customer_id	item
+-- 101	1	Laptop
+-- 102	1	Phone
+-- 103	2	Headphones
+
+-- ❌ What if We Try This:
+-- INSERT INTO Orders (order_id, customer_id, item)
+-- VALUES (104, 999, 'Tablet');
+-- ❗ You'll get an error:
+-- ERROR: insert or update on table "Orders" violates foreign key constraint
+-- Because customer_id = 999 doesn’t exist in the Customers table.
+
+-- 🧨 Now Imagine We Delete a Customer
+-- DELETE FROM Customers WHERE customer_id = 1;
+-- Without any additional setup, this will also cause an error:
+-- ERROR: update or delete on table "Customers" violates foreign key constraint on table "Orders"
+-- Because that customer still has orders in the Orders table. The foreign key is protecting data integrity.
+
+-- ✅ ON DELETE CASCADE — Explained
+-- This is an action clause you can add to a foreign key. It tells the database:
+-- “If a parent record is deleted, automatically delete all related child records too.”
+-- 👇 Modified Orders Table:
+-- CREATE TABLE Orders (
+--   order_id INT PRIMARY KEY,
+--   customer_id INT,
+--   item VARCHAR(100),
+--   FOREIGN KEY (customer_id)
+--     REFERENCES Customers(customer_id)
+--     ON DELETE CASCADE
+-- );
+
+-- 🔥 Now this works:
+-- DELETE FROM Customers WHERE customer_id = 1;
+-- It will automatically delete:
+
+-- Orders:
+-- | order_id | customer_id | item   |
+-- |----------|-------------|--------|
+-- | 101      | 1           | Laptop     ❌
+-- | 102      | 1           | Phone      ❌
+-- All orders from customer 1 are cascaded (deleted automatically).
+
+-- Clause	Description
+-- ON DELETE CASCADE	Deletes child rows when parent is deleted
+-- ON DELETE SET NULL	Sets foreign key in child table to NULL when parent is deleted
+-- ON DELETE RESTRICT	Prevents deletion of parent if child exists (default behavior in many DBs)
+-- ON DELETE NO ACTION	Similar to RESTRICT but enforcement can be deferred
+
+
+
 -- CREATE TABLE customers(
 --     customer_id INT PRIMARY KEY,
 --     name VARCHAR(100),
